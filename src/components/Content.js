@@ -1,8 +1,11 @@
+import { dblClick } from "@testing-library/user-event/dist/click";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Tab from "./Tab";
 import Title from "./Title";
 import YouAndMe from "./YouAndMe";
+import { db } from "../service/firebase";
+import { getDatabase, ref, onValue } from "firebase/database";
 
 const Container = styled.div`
   display: flex;
@@ -41,29 +44,42 @@ function Content() {
   const [hours, setHours] = useState();
   const [minutes, setMinutes] = useState();
   const [seconds, setSeconds] = useState();
+  const [title, setTitle] = useState("");
 
   const [index, setIndex] = useState(0);
 
+  const refresh = (countDownDate) => {
+    var now = new Date().getTime();
+
+    var distance = countDownDate - now;
+
+    var _days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var _hours = Math.floor(
+      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    var _minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var _seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    setDays(_days);
+    setHours(_hours);
+    setMinutes(_minutes);
+    setSeconds(_seconds);
+
+    return distance;
+  };
+
   useEffect(() => {
+    const starCountRef = ref(db, "message");
+    onValue(starCountRef, (snapshot) => {
+      const data = snapshot.val();
+      setTitle(data);
+    });
+
     var countDownDate = new Date("May 11, 2027 0:0:0").getTime();
+    refresh(countDownDate);
 
     var x = setInterval(function () {
-      var now = new Date().getTime();
-
-      var distance = countDownDate - now;
-
-      var _days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      var _hours = Math.floor(
-        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      var _minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      var _seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      setDays(_days);
-      setHours(_hours);
-      setMinutes(_minutes);
-      setSeconds(_seconds);
-
+      const distance = refresh(countDownDate);
       if (distance < 0) {
         clearInterval(x);
       }
@@ -81,7 +97,7 @@ function Content() {
   return (
     <Container>
       <TitleCover>
-        <Title />
+        <Title>{title}</Title>
       </TitleCover>
       <TabCover>
         <Tab

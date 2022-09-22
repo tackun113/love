@@ -2,6 +2,7 @@ import "./App.css";
 import styled from "styled-components";
 import bg from "./assets/images/bg.jpeg";
 import Content from "./components/Content";
+import { useState } from "react";
 
 const Container = styled.div`
   background-color: #ff0057;

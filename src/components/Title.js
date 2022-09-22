@@ -8,8 +8,8 @@ const Container = styled.div`
   font-size: 20px;
 `;
 
-function Title() {
-  return <Container>Anh thương em nhiều thiệt nhiều</Container>;
+function Title({ children }) {
+  return <Container>{children}</Container>;
 }
 
 export default Title;
