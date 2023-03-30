@@ -75,7 +75,7 @@ function Content() {
       setTitle(data);
     });
 
-    var countDownDate = new Date("May 11, 2027 0:0:0").getTime();
+    var countDownDate = new Date("May 11, 2024 0:0:0").getTime();
     refresh(countDownDate);
 
     var x = setInterval(function () {
