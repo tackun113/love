@@ -48,22 +48,20 @@ function Content() {
 
   const [index, setIndex] = useState(0);
 
-  const refresh = (countDownDate) => {
+  const refresh = (count) => {
     var now = new Date().getTime();
+    var distance = now - count;
 
-    var distance = countDownDate - now;
-
-    var _days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    var _hours = Math.floor(
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    setDays(days);
+    var hours = Math.floor(
       (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
     );
-    var _minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var _seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    setDays(_days);
-    setHours(_hours);
-    setMinutes(_minutes);
-    setSeconds(_seconds);
+    setHours(hours);
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    setMinutes(minutes);
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    setSeconds(seconds);
 
     return distance;
   };
@@ -75,7 +73,7 @@ function Content() {
       setTitle(data);
     });
 
-    var countDownDate = new Date("May 11, 2026 0:0:0").getTime();
+    var countDownDate = new Date("May 11, 2022 0:0:0").getTime();
     refresh(countDownDate);
 
     var x = setInterval(function () {

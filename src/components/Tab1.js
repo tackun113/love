@@ -48,7 +48,7 @@ function Tab1({ days }) {
       <Image>
         <HeartOutline />
         <DayCover>
-          <Text>Còn</Text>
+          <Text>Yêu nhau</Text>
           <Day>{days}</Day>
           <Text>Ngày</Text>
         </DayCover>
